@@ -5,5 +5,6 @@
         public Guid Id { get; set; }
         public string IpAddress { get; set; } = null!;
         public string Hostname { get; set; } = null!;
+        public string ApiKey { get; set; } = null!;
     }
 }

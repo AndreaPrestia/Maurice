@@ -1,5 +1,6 @@
 using Maurice.Api.Extensions;
 using Maurice.Application.Interfaces.Services;
+using Maurice.Application.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Maurice.Api
@@ -27,20 +28,20 @@ namespace Maurice.Api
             }
             app.UseHttpsRedirection();
 
-            app.MapPost("/api/{topic}/events", async (CancellationToken cancellationToken, ILoggerFactory loggerFactory, HttpContext httpContext, [FromServices] IEnqueueService enqueueService, [FromRoute] string topic) =>
+            app.MapPost("/api/{topic}/events", async (CancellationToken cancellationToken, ILoggerFactory loggerFactory, HttpContext httpContext, [FromServices] IEnqueueService enqueueService, [FromBody] MessageIncomingInputModel message) =>
                 {
                     var logger = loggerFactory.CreateLogger("Start");
 
                     var dispatcher = httpContext.GetDispatcherFromHttpContext();
 
-                    logger.LogInformation($"Starting processing request for {dispatcher.IpAddress} - {dispatcher.Hostname} for topic {topic}");
+                    logger.LogInformation($"Starting processing request for {dispatcher.IpAddress} - {dispatcher.Hostname} for message {message.Type}");
 
                     try
                     {
-                        var queued = await enqueueService.EnqueueAsync(dispatcher, await new StreamReader(httpContext.Request.Body).ReadToEndAsync(cancellationToken), cancellationToken)
+                        var queued = await enqueueService.EnqueueAsync(dispatcher, message, cancellationToken)
                             .ConfigureAwait(false);
 
-                        logger.LogInformation($"Request for {dispatcher.IpAddress} - {dispatcher.Hostname} for topic {topic} queued: {queued}");
+                        logger.LogInformation($"Request for {dispatcher.IpAddress} - {dispatcher.Hostname} for message {message.Type} queued: {queued}");
 
                         return Results.NoContent();
                     }
