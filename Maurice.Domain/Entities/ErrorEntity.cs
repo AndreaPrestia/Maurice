@@ -1,9 +1,9 @@
 ﻿namespace Maurice.Domain.Entities;
 
-public class EventEntity 
+public class ErrorEntity
 {
     public Guid Id { get; set; }
     public long Timestamp { get; set; }
     public string Body { get; set; } = null!;
-    public Guid EventTypeId { get; set; }
+    public string Error { get; set; } = null!;
 }
