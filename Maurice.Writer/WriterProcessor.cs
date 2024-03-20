@@ -50,8 +50,8 @@ public sealed class WriterProcessor
 
 public class WriterProcessorResult
 {
-    public bool Success { get; set; }
-    public string? ErrorMessage { get; set; }
+    public bool Success { get; }
+    public string? ErrorMessage { get; }
 
     private WriterProcessorResult()
     {

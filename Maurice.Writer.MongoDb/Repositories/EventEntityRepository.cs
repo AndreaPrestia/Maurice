@@ -1,22 +1,18 @@
-﻿using System.Text.Json;
-using Maurice.Domain.Entities;
+﻿using Maurice.Domain.Entities;
 using Maurice.Writer.Abstractions.Repositories;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
+using System.Text.Json;
 
 namespace Maurice.Writer.MongoDb.Repositories;
 
 public sealed class EventEntityRepository : IEventEntityRepository
 {
     private readonly IMongoCollection<EventEntity> _eventCollection;
-    private readonly ILogger<EventEntityRepository> _logger;
 
-    public EventEntityRepository(IConfiguration configuration, ILogger<EventEntityRepository> logger)
+    public EventEntityRepository(IConfiguration configuration)
     {
         ArgumentNullException.ThrowIfNull(configuration);
-        ArgumentNullException.ThrowIfNull(logger);
-        _logger = logger;
         var client = new MongoClient(configuration.GetConnectionString("maurice"));
         _eventCollection = client.GetDatabase("maurice").GetCollection<EventEntity>("events");
     }
