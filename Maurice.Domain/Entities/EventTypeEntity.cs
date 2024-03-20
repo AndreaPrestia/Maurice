@@ -1,6 +1,6 @@
 ﻿namespace Maurice.Domain.Entities;
 
-public class EventTypeEntity
+public sealed class EventTypeEntity
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = null!;
@@ -10,7 +10,7 @@ public class EventTypeEntity
     public ICollection<ScheduleRule> ScheduleRules { get; set; } = new List<ScheduleRule>();
 }
 
-public class ScheduleRule
+public sealed class ScheduleRule
 {
     public string Code { get; set; } = null!;
     public string Cron { get; set; } = null!;

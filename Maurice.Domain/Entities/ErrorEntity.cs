@@ -1,6 +1,6 @@
 ﻿namespace Maurice.Domain.Entities;
 
-public class ErrorEntity
+public sealed class ErrorEntity
 {
     public Guid Id { get; set; }
     public long Timestamp { get; set; }

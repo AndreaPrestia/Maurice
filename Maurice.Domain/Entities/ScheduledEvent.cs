@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Maurice.Domain.Entities
+﻿namespace Maurice.Domain.Entities
 {
-    internal class ScheduledEvent
+    public sealed class ScheduledEvent
     {
+        public Guid Id { get; set; }
+        public long Timestamp { get; set; }
+        public string Body { get; set; } = null!;
+        public ScheduleRule ScheduleRule { get; set; } = null!;
     }
 }

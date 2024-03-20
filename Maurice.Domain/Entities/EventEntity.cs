@@ -1,6 +1,6 @@
 ﻿namespace Maurice.Domain.Entities;
 
-public class EventEntity 
+public sealed class EventEntity 
 {
     public Guid Id { get; set; }
     public long Timestamp { get; set; }
