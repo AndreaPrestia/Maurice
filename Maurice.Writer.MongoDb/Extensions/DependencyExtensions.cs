@@ -10,5 +10,6 @@ public static class DependencyExtensions
     {
         services.AddScoped<IEventTypeEntityRepository, EventTypeEntityRepository>();
         services.AddScoped<IEventEntityRepository, EventEntityRepository>();
+        services.AddScoped<IErrorEntityRepository, ErrorEntityRepository>();
     }
 }

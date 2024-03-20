@@ -1,4 +1,6 @@
-﻿using Maurice.Writer.Abstractions.Repositories;
+﻿using System.Text.Json;
+using Maurice.Domain.Entities;
+using Maurice.Writer.Abstractions.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace Maurice.Writer;
@@ -7,16 +9,19 @@ public sealed class WriterProcessor
 {
     private readonly IEventEntityRepository _eventEntityRepository;
     private readonly IEventTypeEntityRepository _eventTypeEntityRepository;
+    private readonly IErrorEntityRepository _errorEntityRepository;
     private readonly ILogger<WriterProcessor> _logger;
 
-    public WriterProcessor(IEventEntityRepository eventEntityRepository, IEventTypeEntityRepository eventTypeEntityRepository, ILogger<WriterProcessor> logger)
+    public WriterProcessor(IEventEntityRepository eventEntityRepository, IEventTypeEntityRepository eventTypeEntityRepository, IErrorEntityRepository errorEntityRepository, ILogger<WriterProcessor> logger)
     {
         ArgumentNullException.ThrowIfNull(eventEntityRepository);
         ArgumentNullException.ThrowIfNull(eventTypeEntityRepository);
+        ArgumentNullException.ThrowIfNull(errorEntityRepository);
         ArgumentNullException.ThrowIfNull(logger);
 
         _eventEntityRepository = eventEntityRepository;
         _eventTypeEntityRepository = eventTypeEntityRepository;
+        _errorEntityRepository = errorEntityRepository;
         _logger = logger;
     }
 
@@ -43,6 +48,9 @@ public sealed class WriterProcessor
         catch (Exception ex)
         {
             _logger.LogError(ex, ex.Message);
+
+            await _errorEntityRepository.InsertAsync(value, ex, cancellationToken);
+
             return WriterProcessorResult.Ko(ex.Message);
         }
     }
