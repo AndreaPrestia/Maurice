@@ -28,7 +28,7 @@ This part exposes the **SchedulerProcessor**.
 The scheduler processor retrieves from every **EventTypeEntity** the schedule rules and runs the implementations of **IScheduleProcessor** as cron jobs.
 The result of these implementations will be serialized it on the choosed storage as **ScheduledEntity**.
 
-###TODO
+### TODO
 
 - Scheduler.
 - Storage implementations for other service (as SqlServer, Cosmos, etc..)
