@@ -42,12 +42,12 @@ public sealed class ReaderProcessor
 
             if (eventEntities == null)
             {
-                return ReaderProcessorResult<T>.Ok(new List<T?>());
+                return ReaderProcessorResult<T>.Ok(new List<T>());
             }
 
-            var items = eventEntities.Where(e => e != null && !string.IsNullOrWhiteSpace(e.Body)).Select(x => JsonSerializer.Deserialize<T?>(x!.Body)).ToList();
+            var items = eventEntities.Where(e => !string.IsNullOrWhiteSpace(e.Body)).Select(x => JsonSerializer.Deserialize<T>(x.Body)).ToList();
 
-            return ReaderProcessorResult<T>.Ok(items);
+            return ReaderProcessorResult<T>.Ok(items!);
         }
         catch (Exception ex)
         {
@@ -56,7 +56,7 @@ public sealed class ReaderProcessor
         }
     }
 
-    public async Task<ReaderProcessorResult<EventEntity?>> ReadAsync(long start, long end, IList<string> tags, bool descending, CancellationToken cancellationToken)
+    public async Task<ReaderProcessorResult<EventEntity>> ReadAsync(long start, long end, IList<string> tags, bool descending, CancellationToken cancellationToken)
     {
         try
         {
@@ -74,15 +74,15 @@ public sealed class ReaderProcessor
 
             if (eventEntities == null)
             {
-                return ReaderProcessorResult<EventEntity?>.Ok(new List<EventEntity?>());
+                return ReaderProcessorResult<EventEntity>.Ok(new List<EventEntity>());
             }
 
-            return ReaderProcessorResult<EventEntity?>.Ok(eventEntities);
+            return ReaderProcessorResult<EventEntity>.Ok(eventEntities);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, ex.Message);
-            return ReaderProcessorResult<EventEntity?>.Ko(ex.Message);
+            return ReaderProcessorResult<EventEntity>.Ko(ex.Message);
         }
     }
 }
@@ -92,9 +92,9 @@ public class ReaderProcessorResult<T>
     public bool Success { get; }
     public string? ErrorMessage { get; }
 
-    public IList<T?> Items { get; }
+    public IList<T> Items { get; }
 
-    private ReaderProcessorResult(IList<T?> items)
+    private ReaderProcessorResult(IList<T> items)
     {
         Success = true;
         Items = items;
@@ -104,10 +104,10 @@ public class ReaderProcessorResult<T>
     {
         Success = false;
         ErrorMessage = errorMessage;
-        Items = new List<T?>();
+        Items = new List<T>();
     }
 
-    public static ReaderProcessorResult<T> Ok(IList<T?> items) => new(items);
+    public static ReaderProcessorResult<T> Ok(IList<T> items) => new(items);
 
     public static ReaderProcessorResult<T> Ko(string? errorMessage) => new(errorMessage);
 }

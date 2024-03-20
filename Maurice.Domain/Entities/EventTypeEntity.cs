@@ -6,8 +6,8 @@ public sealed class EventTypeEntity
     public string Name { get; set; } = null!;
     public long Created { get; set; }
     public long Updated { get; set; }
-    public ICollection<string> Tags { get; set; } = new List<string>();
-    public ICollection<ScheduleRule> ScheduleRules { get; set; } = new List<ScheduleRule>();
+    public IList<string> Tags { get; set; } = new List<string>();
+    public IList<ScheduleRule> ScheduleRules { get; set; } = new List<ScheduleRule>();
 }
 
 public sealed class ScheduleRule

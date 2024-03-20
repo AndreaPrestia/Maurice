@@ -3,7 +3,6 @@ using Maurice.Reader.Abstractions.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
-using static MongoDB.Driver.WriteConcern;
 
 namespace Maurice.Reader.Mongo.Repositories;
 
