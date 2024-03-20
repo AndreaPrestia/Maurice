@@ -30,4 +30,19 @@ public sealed class EventEntityRepository : IEventEntityRepository
 
         return await _eventCollection.Find(filter).Sort(sort).ToListAsync(cancellationToken: cancellationToken);
     }
+
+    public async Task<IList<EventEntity>?> ReadAsync(long start, long end, IList<EventTypeEntity> eventTypeEntities, bool descending, CancellationToken cancellationToken)
+    {
+        var builder = Builders<EventEntity>.Filter;
+
+        var filter = builder.Gte(r => r.Timestamp, start)
+                     & builder.Lte(r => r.Timestamp, end)
+                     & builder.In(r => r.EventTypeId, eventTypeEntities.Select(et => et.Id).ToList());
+
+        var sortBuilder = Builders<EventEntity>.Sort;
+
+        var sort = descending ? sortBuilder.Descending(f => f.Timestamp) : sortBuilder.Ascending(f => f.Timestamp);
+
+        return await _eventCollection.Find(filter).Sort(sort).ToListAsync(cancellationToken: cancellationToken);
+    }
 }

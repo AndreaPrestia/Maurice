@@ -3,6 +3,7 @@ using Maurice.Reader.Abstractions.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
+using static MongoDB.Driver.WriteConcern;
 
 namespace Maurice.Reader.Mongo.Repositories;
 
@@ -30,6 +31,21 @@ public class EventTypeEntityRepository : IEventTypeEntityRepository
                 .Eq(r => r.Name, type.Name);
 
             return await _eventTypeCollection.Find(filter).FirstOrDefaultAsync(cancellationToken: cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            return null;
+        }
+    }
+
+    public async Task<IList<EventTypeEntity>?> ReadAsync(IList<string> tags, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var filter = Builders<EventTypeEntity>.Filter.In("Tags", tags);
+
+            return await _eventTypeCollection.Find(filter).ToListAsync(cancellationToken: cancellationToken);
         }
         catch (Exception ex)
         {

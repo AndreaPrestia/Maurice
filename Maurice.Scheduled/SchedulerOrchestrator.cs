@@ -36,7 +36,10 @@ namespace Maurice.Scheduler
 
                 foreach (var entityType in entityTypes)
                 {
-                    //TODO for every schedule rule initialize the implementations for scheduling
+                    foreach (var scheduleRule in entityType.ScheduleRules)
+                    {
+                        //TODO for every schedule rule initialize the implementations for scheduling
+                    }
                 }
 
                 _logger.LogInformation("Ended scheduling");
