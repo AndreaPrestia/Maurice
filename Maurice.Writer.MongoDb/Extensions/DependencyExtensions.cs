@@ -1,8 +1,8 @@
 ﻿using Maurice.Writer.Abstractions.Repositories;
-using Maurice.Writer.MongoDb.Repositories;
+using Maurice.Writer.Mongo.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Maurice.Writer.MongoDb.Extensions;
+namespace Maurice.Writer.Mongo.Extensions;
 
 public static class DependencyExtensions
 {

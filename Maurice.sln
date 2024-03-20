@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maurice.Writer", "Maurice.W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maurice.Scheduler", "Maurice.Scheduled\Maurice.Scheduler.csproj", "{85495020-CFA8-40F5-AA67-2D39F9C2B80A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maurice.Writer.MongoDb", "Maurice.Writer.MongoDb\Maurice.Writer.MongoDb.csproj", "{CD129786-7DDF-4133-BB22-8317EC543D15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maurice.Writer.Mongo", "Maurice.Writer.MongoDb\Maurice.Writer.Mongo.csproj", "{CD129786-7DDF-4133-BB22-8317EC543D15}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maurice.Reader.MongoDb", "Maurice.Reader.MongoDb\Maurice.Reader.MongoDb.csproj", "{87D706E9-AF7E-4A16-8424-E756C7490A9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maurice.Reader.Mongo", "Maurice.Reader.MongoDb\Maurice.Reader.Mongo.csproj", "{87D706E9-AF7E-4A16-8424-E756C7490A9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

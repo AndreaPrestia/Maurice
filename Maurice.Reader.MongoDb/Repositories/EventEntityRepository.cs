@@ -3,7 +3,7 @@ using Maurice.Reader.Abstractions.Repository;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 
-namespace Maurice.Reader.MongoDb.Repositories;
+namespace Maurice.Reader.Mongo.Repositories;
 
 public sealed class EventEntityRepository : IEventEntityRepository
 {

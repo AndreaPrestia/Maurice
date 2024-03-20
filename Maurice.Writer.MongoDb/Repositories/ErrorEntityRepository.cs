@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using System.Text.Json;
 
-namespace Maurice.Writer.MongoDb.Repositories
+namespace Maurice.Writer.Mongo.Repositories
 {
     public class ErrorEntityRepository : IErrorEntityRepository
     {

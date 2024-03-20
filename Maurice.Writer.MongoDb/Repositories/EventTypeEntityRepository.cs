@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 
-namespace Maurice.Writer.MongoDb.Repositories;
+namespace Maurice.Writer.Mongo.Repositories;
 
 public class EventTypeEntityRepository : IEventTypeEntityRepository
 {
