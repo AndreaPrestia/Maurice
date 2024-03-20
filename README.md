@@ -14,7 +14,6 @@ It contains the following entities:
 - EventTypeEntity
 - EventEntity
 - ErrorEntity
-- ScheduledEntity
   
 ### Writer
 This part exposes the **WriterProcessor** that gived an object of type **T** validates it, retrieves the **EventTypeEntity** configured and serialize it on the choosed storage as **EventEntity**.
@@ -26,11 +25,11 @@ This part exposes the **ReaderProcessor** that gived an object of type **T** val
 ### Scheduler
 This part exposes the **SchedulerProcessor**.
 The scheduler processor retrieves from every **EventTypeEntity** the schedule rules and runs the implementations of **IScheduleProcessor** as cron jobs.
-The result of these implementations will be serialized it on the choosed storage as **ScheduledEntity**.
+The result of these implementations will be serialized it on the choosed storage as a new **EventEntity**.
 
 ### TODO
 
-- Scheduler.
+- Scheduler with cron jobs.
 - Storage implementations for other service (as SqlServer, Cosmos, etc..)
 - Unit tests.
 - Move the serialize logic to a message queue.
