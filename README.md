@@ -20,7 +20,7 @@ It contains the following entities:
 This part exposes the **WriterProcessor** that gived an object of type **T** validates it, retrieves the **EventTypeEntity** configured and serialize it on the choosed storage as **EventEntity**.
 In case of error an **ErrorEntity** will be written.
 
-### Writer
+### Reader
 This part exposes the **ReaderProcessor** that gived an object of type **T** validates it, retrieves the **EventTypeEntity** configured and reads from the choosed storage as **EventEntity** using the date range and order by timestamp ASC/DESC by the parameter featured.
 
 ### Scheduler
@@ -35,3 +35,4 @@ The result of these implementations will be serialized it on the choosed storage
 - Unit tests.
 - Move the serialize logic to a message queue.
 - Auth.
+- Implement an horizontal scalability mechanism for reader. What i want to do? I'd like to have one database that is for writings. And a lot of distributed copies read-only. I think that the read capability it's more important in this context instead of writing one.
