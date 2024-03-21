@@ -72,7 +72,7 @@ public sealed class ReaderProcessor
             if (eventTypeEntities == null || eventTypeEntities.Count == 0)
             {
                 throw new InvalidOperationException(
-                    $"EventTypes for tags {string.Join(',', tags)} not configured. Cannot proceed with processing.");
+                    $"EventTypes for tags '{string.Join(',', tags)}' not configured. Cannot proceed with processing.");
             }
 
             var eventEntities = await _eventEntityRepository.ReadAsync(start, end, eventTypeEntities, descending, cancellationToken);

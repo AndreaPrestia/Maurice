@@ -239,6 +239,219 @@ namespace Maurice.Reader.Tests
             Assert.Empty(result.Items);
         }
 
+        [Fact]
+        public async Task ReadAsync_Ok()
+        {
+            // Arrange
+            var start = new DateTimeOffset(DateTime.UtcNow.AddDays(-3)).ToUnixTimeMilliseconds();
+            var end = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+            var tags = new List<string>()
+            {
+                "Tag1", "Tag2"
+            };
+
+            var eventTypeEntity = new EventTypeEntity()
+            {
+                Id = Guid.NewGuid(),
+                Name = "TestClass",
+                Created = new DateTimeOffset(DateTime.UtcNow.AddDays(-10)).ToUnixTimeMilliseconds(),
+                Updated = new DateTimeOffset(DateTime.UtcNow.AddDays(-10)).ToUnixTimeMilliseconds(),
+                Tags = tags
+            };
+
+            var eventTypes = new List<EventTypeEntity>()
+            {
+                eventTypeEntity
+            };
+
+            var eventEntities = new List<EventEntity>()
+            {
+                new()
+                {
+                    Body = @"{""name"": ""Name 1"", ""description"": ""Description 1""}",
+                    EventTypeId = eventTypeEntity.Id,
+                    Id = Guid.NewGuid(),
+                    Timestamp = new DateTimeOffset(DateTime.UtcNow.AddDays(-2)).ToUnixTimeMilliseconds()
+                },
+                new()
+                {
+                    Body = @"{""name"": ""Name 2"", ""description"": ""Description 2""}",
+                    EventTypeId = eventTypeEntity.Id,
+                    Id = Guid.NewGuid(),
+                    Timestamp = new DateTimeOffset(DateTime.UtcNow.AddDays(-1)).ToUnixTimeMilliseconds()
+                }
+            };
+
+            _mockEventEntityTypeRepository.Setup(x => x.ReadAsync(It.Is<IList<string>>(t => t.SequenceEqual(tags)), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(eventTypes);
+
+            _mockEventEntityRepository.Setup(x => x.ReadAsync(It.Is<long>(t => t == start), It.Is<long>(t => t == end), It.Is<IList<EventTypeEntity>>(t => t.SequenceEqual(eventTypes)), It.Is<bool>(t => t), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(eventEntities);
+
+            var service = _host.Services.GetRequiredService<ReaderProcessor>();
+
+            // Act
+            var result = await service.ReadAsync(start, end, tags, true, CancellationToken.None);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.True(result.Success);
+            Assert.Collection(result.Items, e =>
+            {
+                Assert.NotNull(e);
+                Assert.Equal(eventEntities.FirstOrDefault()!.Id, e.Id);
+                Assert.Equal(eventEntities.FirstOrDefault()!.Timestamp, e.Timestamp);
+                Assert.Equal(eventEntities.FirstOrDefault()!.EventTypeId, e.EventTypeId);
+                Assert.Equal(eventEntities.FirstOrDefault()!.Body, e.Body);
+            }, e =>
+            {
+                Assert.NotNull(e);
+                Assert.Equal(eventEntities.LastOrDefault()!.Id, e.Id);
+                Assert.Equal(eventEntities.LastOrDefault()!.Timestamp, e.Timestamp);
+                Assert.Equal(eventEntities.LastOrDefault()!.EventTypeId, e.EventTypeId);
+                Assert.Equal(eventEntities.LastOrDefault()!.Body, e.Body);
+            });
+        }
+
+        [Fact]
+        public async Task ReadAsync_Ok_Empty()
+        {
+            // Arrange
+            var start = new DateTimeOffset(DateTime.UtcNow.AddDays(-3)).ToUnixTimeMilliseconds();
+            var end = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+            var tags = new List<string>()
+            {
+                "Tag1", "Tag2"
+            };
+
+            var eventTypeEntity = new EventTypeEntity()
+            {
+                Id = Guid.NewGuid(),
+                Name = "TestClass",
+                Created = new DateTimeOffset(DateTime.UtcNow.AddDays(-10)).ToUnixTimeMilliseconds(),
+                Updated = new DateTimeOffset(DateTime.UtcNow.AddDays(-10)).ToUnixTimeMilliseconds(),
+                Tags = tags
+            };
+
+            var eventTypes = new List<EventTypeEntity>()
+            {
+                eventTypeEntity
+            };
+
+            _mockEventEntityTypeRepository.Setup(x => x.ReadAsync(It.Is<IList<string>>(t => t.SequenceEqual(tags)), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(eventTypes);
+
+            _mockEventEntityRepository.Setup(x => x.ReadAsync(It.Is<long>(t => t == start), It.Is<long>(t => t == end), It.Is<EventTypeEntity>(t => t.Id == eventTypeEntity.Id && t.Name == eventTypeEntity.Name && t.Tags.SequenceEqual(eventTypeEntity.Tags)), It.Is<bool>(t => t), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new List<EventEntity>());
+
+            var service = _host.Services.GetRequiredService<ReaderProcessor>();
+
+            // Act
+            var result = await service.ReadAsync(start, end, tags, true, CancellationToken.None);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.True(result.Success);
+            Assert.Empty(result.Items);
+        }
+
+        [Fact]
+        public async Task ReadAsync_Ok_Null_Empty()
+        {
+            // Arrange
+            var start = new DateTimeOffset(DateTime.UtcNow.AddDays(-3)).ToUnixTimeMilliseconds();
+            var end = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+            var tags = new List<string>()
+            {
+                "Tag1", "Tag2"
+            };
+
+            var eventTypeEntity = new EventTypeEntity()
+            {
+                Id = Guid.NewGuid(),
+                Name = "TestClass",
+                Created = new DateTimeOffset(DateTime.UtcNow.AddDays(-10)).ToUnixTimeMilliseconds(),
+                Updated = new DateTimeOffset(DateTime.UtcNow.AddDays(-10)).ToUnixTimeMilliseconds(),
+                Tags = tags
+            };
+
+            var eventTypes = new List<EventTypeEntity>()
+            {
+                eventTypeEntity
+            };
+
+            _mockEventEntityTypeRepository.Setup(x => x.ReadAsync(It.Is<IList<string>>(t => t.SequenceEqual(tags)), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(eventTypes);
+
+            _mockEventEntityRepository.Setup(x => x.ReadAsync(It.Is<long>(t => t == start), It.Is<long>(t => t == end), It.Is<EventTypeEntity>(t => t.Id == eventTypeEntity.Id && t.Name == eventTypeEntity.Name && t.Tags.SequenceEqual(eventTypeEntity.Tags)), It.Is<bool>(t => t), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((IList<EventEntity>?)null);
+
+            var service = _host.Services.GetRequiredService<ReaderProcessor>();
+
+            // Act
+            var result = await service.ReadAsync(start, end, tags, true, CancellationToken.None);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.True(result.Success);
+            Assert.Empty(result.Items);
+        }
+
+        [Fact]
+        public async Task ReadAsync_Ko_No_EntityTypes_Found_Null()
+        {
+            // Arrange
+            var start = new DateTimeOffset(DateTime.UtcNow.AddDays(-3)).ToUnixTimeMilliseconds();
+            var end = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+            var tags = new List<string>()
+            {
+                "Tag1", "Tag2"
+            };
+
+            _mockEventEntityTypeRepository.Setup(x => x.ReadAsync(It.Is<IList<string>>(t => t.SequenceEqual(tags)), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((IList<EventTypeEntity>?)null);
+
+            var service = _host.Services.GetRequiredService<ReaderProcessor>();
+
+            // Act
+            var result = await service.ReadAsync(start, end, tags, true, CancellationToken.None);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.False(result.Success);
+            Assert.NotNull(result.ErrorMessage);
+            Assert.Equal($"EventTypes for tags '{string.Join(',', tags)}' not configured. Cannot proceed with processing.", result.ErrorMessage);
+            Assert.Empty(result.Items);
+        }
+
+
+        [Fact]
+        public async Task ReadAsync_Ko_No_EntityTypes_Found_Empty()
+        {
+            // Arrange
+            var start = new DateTimeOffset(DateTime.UtcNow.AddDays(-3)).ToUnixTimeMilliseconds();
+            var end = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+            var tags = new List<string>()
+            {
+                "Tag1", "Tag2"
+            };
+
+            _mockEventEntityTypeRepository.Setup(x => x.ReadAsync(It.Is<IList<string>>(t => t.SequenceEqual(tags)), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new List<EventTypeEntity>());
+
+            var service = _host.Services.GetRequiredService<ReaderProcessor>();
+
+            // Act
+            var result = await service.ReadAsync(start, end, tags, true, CancellationToken.None);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.False(result.Success);
+            Assert.NotNull(result.ErrorMessage);
+            Assert.Equal($"EventTypes for tags '{string.Join(',', tags)}' not configured. Cannot proceed with processing.", result.ErrorMessage);
+            Assert.Empty(result.Items);
+        }
+
         public class TestClass
         {
             public string? Name { get; set; }
