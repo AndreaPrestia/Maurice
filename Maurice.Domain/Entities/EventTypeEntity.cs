@@ -7,12 +7,4 @@ public sealed class EventTypeEntity
     public long Created { get; set; }
     public long Updated { get; set; }
     public IList<string> Tags { get; set; } = new List<string>();
-    public IList<ScheduleRule> ScheduleRules { get; set; } = new List<ScheduleRule>();
-}
-
-public sealed class ScheduleRule
-{
-    public string Code { get; set; } = null!;
-    public string Cron { get; set; } = null!;
-    public string Type { get; set; } = null!;  
 }

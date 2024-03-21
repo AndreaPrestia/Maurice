@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maurice.Writer.Mongo", "Mau
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maurice.Reader.Mongo", "Maurice.Reader.Mongo\Maurice.Reader.Mongo.csproj", "{87D706E9-AF7E-4A16-8424-E756C7490A9F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B73556B4-FA80-4F91-9289-A45A59C26BD1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maurice.Reader.Tests", "Tests\Maurice.Reader.Tests\Maurice.Reader.Tests.csproj", "{BEF0124B-C539-4B5A-A373-B8700B9000EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,9 +43,16 @@ Global
 		{87D706E9-AF7E-4A16-8424-E756C7490A9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87D706E9-AF7E-4A16-8424-E756C7490A9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87D706E9-AF7E-4A16-8424-E756C7490A9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEF0124B-C539-4B5A-A373-B8700B9000EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEF0124B-C539-4B5A-A373-B8700B9000EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEF0124B-C539-4B5A-A373-B8700B9000EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEF0124B-C539-4B5A-A373-B8700B9000EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BEF0124B-C539-4B5A-A373-B8700B9000EC} = {B73556B4-FA80-4F91-9289-A45A59C26BD1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32F6CC0D-9F3A-48D5-A3E3-5245D010CB43}

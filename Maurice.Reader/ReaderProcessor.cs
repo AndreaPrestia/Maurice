@@ -10,6 +10,11 @@ public sealed class ReaderProcessor
     private readonly IEventEntityRepository _eventEntityRepository;
     private readonly IEventTypeEntityRepository _eventTypeEntityRepository;
     private readonly ILogger<ReaderProcessor> _logger;
+    private readonly JsonSerializerOptions _serializerOptions = new()
+    {
+        AllowTrailingCommas = true,
+        PropertyNameCaseInsensitive = true
+    };
 
     public ReaderProcessor(IEventEntityRepository eventEntityRepository, IEventTypeEntityRepository eventTypeEntityRepository, ILogger<ReaderProcessor> logger)
     {
@@ -35,7 +40,7 @@ public sealed class ReaderProcessor
             if (eventTypeEntity == null)
             {
                 throw new InvalidOperationException(
-                    $"EventType {typeName} not configured. Cannot proceed with processing.");
+                    $"EventType '{typeName}' not configured. Cannot proceed with processing.");
             }
 
             var eventEntities = await _eventEntityRepository.ReadAsync(start, end, eventTypeEntity, descending, cancellationToken);
@@ -45,7 +50,7 @@ public sealed class ReaderProcessor
                 return ReaderProcessorResult<T>.Ok(new List<T>());
             }
 
-            var items = eventEntities.Where(e => !string.IsNullOrWhiteSpace(e.Body)).Select(x => JsonSerializer.Deserialize<T>(x.Body)).ToList();
+            var items = eventEntities.Where(e => !string.IsNullOrWhiteSpace(e.Body)).Select(x => JsonSerializer.Deserialize<T>(x.Body, _serializerOptions)).ToList();
 
             return ReaderProcessorResult<T>.Ok(items!);
         }
