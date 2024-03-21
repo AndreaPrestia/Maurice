@@ -23,8 +23,6 @@ This part exposes the **ReaderProcessor** that gived an object of type **T** val
 
 ### TODO
 
-- Storage implementations for other service (as SqlServer, Cosmos, etc..)
-- Unit tests.
 - Move the serialize logic to a message queue.
-- Auth.
+- Storage implementations for other service (as SqlServer, Cosmos, etc..)
 - Implement an horizontal scalability mechanism for reader. What i want to do? I'd like to have one database that is for writings. And a lot of distributed copies read-only. I think that the read capability it's more important in this context instead of writing one.
