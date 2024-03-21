@@ -9,11 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maurice.Reader", "Maurice.R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maurice.Writer", "Maurice.Writer\Maurice.Writer.csproj", "{D3388A67-9D45-42F4-8B88-2BC201C8029E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maurice.Scheduler", "Maurice.Scheduled\Maurice.Scheduler.csproj", "{85495020-CFA8-40F5-AA67-2D39F9C2B80A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maurice.Writer.Mongo", "Maurice.Writer.Mongo\Maurice.Writer.Mongo.csproj", "{CD129786-7DDF-4133-BB22-8317EC543D15}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maurice.Writer.Mongo", "Maurice.Writer.MongoDb\Maurice.Writer.Mongo.csproj", "{CD129786-7DDF-4133-BB22-8317EC543D15}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maurice.Reader.Mongo", "Maurice.Reader.MongoDb\Maurice.Reader.Mongo.csproj", "{87D706E9-AF7E-4A16-8424-E756C7490A9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maurice.Reader.Mongo", "Maurice.Reader.Mongo\Maurice.Reader.Mongo.csproj", "{87D706E9-AF7E-4A16-8424-E756C7490A9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +31,6 @@ Global
 		{D3388A67-9D45-42F4-8B88-2BC201C8029E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3388A67-9D45-42F4-8B88-2BC201C8029E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3388A67-9D45-42F4-8B88-2BC201C8029E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{85495020-CFA8-40F5-AA67-2D39F9C2B80A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{85495020-CFA8-40F5-AA67-2D39F9C2B80A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{85495020-CFA8-40F5-AA67-2D39F9C2B80A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{85495020-CFA8-40F5-AA67-2D39F9C2B80A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD129786-7DDF-4133-BB22-8317EC543D15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CD129786-7DDF-4133-BB22-8317EC543D15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD129786-7DDF-4133-BB22-8317EC543D15}.Release|Any CPU.ActiveCfg = Release|Any CPU
