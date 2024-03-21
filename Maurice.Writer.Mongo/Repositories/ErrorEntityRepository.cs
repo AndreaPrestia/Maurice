@@ -4,30 +4,29 @@ using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using System.Text.Json;
 
-namespace Maurice.Writer.Mongo.Repositories
+namespace Maurice.Writer.Mongo.Repositories;
+
+public class ErrorEntityRepository : IErrorEntityRepository
 {
-    public class ErrorEntityRepository : IErrorEntityRepository
+    private readonly IMongoCollection<ErrorEntity> _errorCollection;
+
+    public ErrorEntityRepository(IConfiguration configuration)
     {
-        private readonly IMongoCollection<ErrorEntity> _errorCollection;
+        ArgumentNullException.ThrowIfNull(configuration);
+        var client = new MongoClient(configuration.GetConnectionString("maurice"));
+        _errorCollection = client.GetDatabase("maurice").GetCollection<ErrorEntity>("errors");
+    }
 
-        public ErrorEntityRepository(IConfiguration configuration)
+    public async Task InsertAsync<T>(T? eventContent, Exception exception, CancellationToken cancellationToken) where T : class
+    {
+        var entity = new ErrorEntity()
         {
-            ArgumentNullException.ThrowIfNull(configuration);
-            var client = new MongoClient(configuration.GetConnectionString("maurice"));
-            _errorCollection = client.GetDatabase("maurice").GetCollection<ErrorEntity>("errors");
-        }
+            Body = eventContent != null ? JsonSerializer.Serialize(eventContent) : "{}",
+            Error = exception.Message,
+            Id = Guid.NewGuid(),
+            Timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds()
+        };
 
-        public async Task InsertAsync<T>(T eventContent, Exception exception, CancellationToken cancellationToken) where T : class
-        {
-            var entity = new ErrorEntity()
-            {
-                Body = JsonSerializer.Serialize(eventContent),
-                Error = exception.Message,
-                Id = Guid.NewGuid(),
-                Timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds()
-            };
-
-            await _errorCollection.InsertOneAsync(entity, cancellationToken: cancellationToken);
-        }
+        await _errorCollection.InsertOneAsync(entity, cancellationToken: cancellationToken);
     }
 }

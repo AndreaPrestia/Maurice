@@ -1,9 +1,8 @@
 ﻿using Maurice.Domain.Entities;
 
-namespace Maurice.Reader.Abstractions.Repository
+namespace Maurice.Reader.Abstractions.Repository;
+
+public interface IErrorEntityRepository
 {
-    public interface IErrorEntityRepository
-    {
-        Task<IList<ErrorEntity>?> ReadAsync(long start, long end, bool descending, CancellationToken cancellationToken);
-    }
+    Task<IList<ErrorEntity>?> ReadAsync(long start, long end, bool descending, CancellationToken cancellationToken);
 }

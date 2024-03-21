@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B73556B4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maurice.Reader.Tests", "Tests\Maurice.Reader.Tests\Maurice.Reader.Tests.csproj", "{BEF0124B-C539-4B5A-A373-B8700B9000EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maurice.Writer.Tests", "Tests\Maurice.Writer.Tests\Maurice.Writer.Tests.csproj", "{F7ADA1A8-D41D-4836-919A-66E089A61448}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,12 +49,17 @@ Global
 		{BEF0124B-C539-4B5A-A373-B8700B9000EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEF0124B-C539-4B5A-A373-B8700B9000EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEF0124B-C539-4B5A-A373-B8700B9000EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7ADA1A8-D41D-4836-919A-66E089A61448}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7ADA1A8-D41D-4836-919A-66E089A61448}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7ADA1A8-D41D-4836-919A-66E089A61448}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7ADA1A8-D41D-4836-919A-66E089A61448}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BEF0124B-C539-4B5A-A373-B8700B9000EC} = {B73556B4-FA80-4F91-9289-A45A59C26BD1}
+		{F7ADA1A8-D41D-4836-919A-66E089A61448} = {B73556B4-FA80-4F91-9289-A45A59C26BD1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32F6CC0D-9F3A-48D5-A3E3-5245D010CB43}

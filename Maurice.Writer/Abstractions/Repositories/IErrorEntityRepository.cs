@@ -1,9 +1,6 @@
-﻿using Maurice.Domain.Entities;
+﻿namespace Maurice.Writer.Abstractions.Repositories;
 
-namespace Maurice.Writer.Abstractions.Repositories
+public interface IErrorEntityRepository
 {
-    public interface IErrorEntityRepository
-    {
-        Task InsertAsync<T>(T eventContent, Exception exception, CancellationToken cancellationToken) where T : class;
-    }
+    Task InsertAsync<T>(T? eventContent, Exception exception, CancellationToken cancellationToken) where T : class;
 }

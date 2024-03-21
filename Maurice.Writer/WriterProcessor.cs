@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-using Maurice.Domain.Entities;
-using Maurice.Writer.Abstractions.Repositories;
+﻿using Maurice.Writer.Abstractions.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace Maurice.Writer;
@@ -25,10 +23,12 @@ public sealed class WriterProcessor
         _logger = logger;
     }
 
-    public async Task<WriterProcessorResult> WriteAsync<T>(T value, CancellationToken cancellationToken) where T : class
+    public async Task<WriterProcessorResult> WriteAsync<T>(T? value, CancellationToken cancellationToken) where T : class
     {
         try
         {
+            ArgumentNullException.ThrowIfNull(value);
+
             var typeName = typeof(T).Name;
 
             _logger.LogInformation($"Start processing eventType {typeName}");
@@ -38,7 +38,7 @@ public sealed class WriterProcessor
             if (eventTypeEntity == null)
             {
                 throw new InvalidOperationException(
-                    $"EventType {typeName} not configured. Cannot proceed with processing.");
+                    $"EventType '{typeName}' not configured. Cannot proceed with processing.");
             }
 
             await _eventEntityRepository.InsertAsync(value, eventTypeEntity, cancellationToken);

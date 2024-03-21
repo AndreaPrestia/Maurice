@@ -180,7 +180,7 @@ namespace Maurice.Reader.Tests
             Assert.NotNull(result);
             Assert.False(result.Success);
             Assert.NotNull(result.ErrorMessage);
-            Assert.Equal($"EventType 'TestClass' not configured. Cannot proceed with processing.", result.ErrorMessage);
+            Assert.Equal("EventType 'TestClass' not configured. Cannot proceed with processing.", result.ErrorMessage);
             Assert.Empty(result.Items);
         }
 
